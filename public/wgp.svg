@@ -1,0 +1,23 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="none"/> <!-- 透明背景 -->
+
+  <!-- 上排 W -->
+  <text x="50%" y="45"
+        font-size="50"
+        font-family="'Poppins', sans-serif"
+        font-weight="600"
+        text-anchor="middle"
+        fill="#4CAF50">
+    W
+  </text>
+
+  <!-- 下排 GP -->
+  <text x="50%" y="120"
+        font-size="50"
+        font-family="'Poppins', sans-serif"
+        font-weight="600"
+        text-anchor="middle"
+        fill="#4CAF50">
+    GP
+  </text>
+</svg>

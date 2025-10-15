@@ -1,0 +1,49 @@
+{
+  "name": "wgp_web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "dev:local": "vite --mode development",
+    "dev:staging": "vite --mode staging",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "build:prod": "run-p type-check \"build-only {@}\" --",
+    "build:staging": "run-p type-check \"build-only {@}\" -- --mode staging",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build"
+  },
+  "dependencies": {
+    "@unocss/preset-attributify": "^66.5.3",
+    "@unocss/preset-uno": "^66.5.3",
+    "@vicons/antd": "^0.13.0",
+    "@vicons/fa": "^0.13.0",
+    "@vicons/ionicons5": "^0.13.0",
+    "@vicons/material": "^0.13.0",
+    "axios": "^1.12.2",
+    "naive-ui": "^2.43.1",
+    "nprogress": "^0.2.0",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@iconify-json/ep": "^1.2.3",
+    "@iconify-json/mdi": "^1.2.3",
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.18.6",
+    "@types/nprogress": "^0.2.3",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/tsconfig": "^0.8.1",
+    "npm-run-all2": "^8.0.4",
+    "typescript": "~5.9.0",
+    "unocss": "^66.5.3",
+    "vite": "^7.1.7",
+    "vite-plugin-vue-devtools": "^8.0.2",
+    "vue-tsc": "^3.1.0"
+  }
+}

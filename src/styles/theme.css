@@ -1,0 +1,176 @@
+/* 浅色主题的全局样式 */
+
+/* 浅色主题默认样式 */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #e0e0e0;
+  --header-bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --hover-bg: #f0f0f0;
+  --primary-color: #18a058;
+  --success-color: #18a058;
+  --warning-color: #f0a020;
+  --error-color: #d03050;
+}
+
+/* 应用主题变量 */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* 头部样式 */
+.n-layout-header {
+  background-color: var(--header-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* 卡片样式 */
+.n-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* 菜单样式 */
+.n-menu {
+  background-color: transparent !important;
+}
+
+.n-menu-item {
+  background-color: transparent !important;
+}
+
+.n-menu-item:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+/* 菜单项图标颜色 */
+.n-menu-item-content__icon {
+  color: var(--text-color);
+}
+
+.n-menu-item-content__arrow {
+  color: var(--text-color);
+}
+
+.n-menu-item-content__extra {
+  color: var(--text-color);
+}
+
+/* 收起时的菜单项 */
+.n-menu--collapsed .n-menu-item-content {
+  justify-content: center;
+}
+
+.n-menu--collapsed .n-menu-item-content__icon {
+  margin: 0;
+}
+
+.n-menu--collapsed .n-menu-item-content__text {
+  display: none;
+}
+
+/* 面包屑样式 */
+.n-breadcrumb {
+  color: var(--text-color);
+}
+
+.n-breadcrumb a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.n-breadcrumb a:hover {
+  color: var(--primary-color);
+}
+
+.n-breadcrumb .n-breadcrumb-item {
+  color: var(--text-color);
+}
+
+.n-breadcrumb .n-breadcrumb-separator {
+  color: var(--text-color);
+}
+
+/* 按钮样式 */
+.n-button {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.n-button:hover {
+  background-color: var(--hover-bg);
+}
+
+.n-button--primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #ffffff !important;
+}
+
+/* 表格样式 */
+.n-data-table {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+.n-data-table-th {
+  background-color: var(--header-bg);
+  color: var(--text-color);
+}
+
+.n-data-table-td {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+/* 输入框样式 */
+.n-input {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.n-input__input-el {
+  color: var(--text-color);
+}
+
+/* 下拉菜单样式 */
+.n-dropdown {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.n-dropdown-option {
+  color: var(--text-color);
+}
+
+.n-dropdown-option:hover {
+  background-color: var(--hover-bg);
+}
+
+/* 提示框样式 */
+.n-alert {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+/* 标签样式 */
+.n-tag {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+/* 头像样式 */
+.n-avatar {
+  background-color: var(--header-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
