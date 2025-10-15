@@ -104,7 +104,7 @@ router.beforeEach((to, from, next) => {
   // 检查是否需要认证
   const requiresAuth = !to.meta?.anonymous
   
-  if (requiresAuth && !userStore.isLoggedIn) {
+  if (requiresAuth && !userStore.isLoggedIn && userStore.isTokenExpired) {
     // 需要认证但未登录，重定向到登录页
     // 立即完成进度条并跳转
     NProgress.done()

@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 
 // 用户信息接口定义
 export interface UserInfo {
@@ -8,11 +9,37 @@ export interface UserInfo {
 }
 
 export const useUserStore = defineStore('user', () => {
+  const router = useRouter()
+  
   // 用户信息状态
   const userInfo = ref<UserInfo | null>(null)
   
   // 是否已登录
   const isLoggedIn = computed(() => !!userInfo.value)
+
+  //token是否过期
+  const isTokenExpired = computed(() => {
+    const token = localStorage.getItem('access_token')
+    if (!token) {
+      return true
+    }
+    // 假设 token 过期时间为 1 小时
+    const expirationTime = 60 * 60 * 1000 * 12
+    const now = new Date().getTime()
+    const tokenTimestamp = new Date(token).getTime()
+    return now - tokenTimestamp > expirationTime //如果当前时间减去token的创建时间大于过期时间，则返回true
+  })
+  
+  // 检查token是否过期并跳转
+  const checkTokenAndRedirect = () => {
+    if (isTokenExpired.value) {
+      clearUserInfo()
+      // 跳转到登录页面
+      router.push('/login')
+      return true
+    }
+    return false
+  }
   
   // 设置用户信息
   function setUserInfo(user: UserInfo) {
@@ -52,6 +79,9 @@ export const useUserStore = defineStore('user', () => {
         role: 'user'
       }
     }
+    
+    // 检查token是否过期
+    checkTokenAndRedirect()
   }
   
   // 获取用户权限
@@ -60,6 +90,8 @@ export const useUserStore = defineStore('user', () => {
   return { 
     userInfo, 
     isLoggedIn, 
+    isTokenExpired,
+    checkTokenAndRedirect,
     userRole,
     setUserInfo, 
     clearUserInfo,
