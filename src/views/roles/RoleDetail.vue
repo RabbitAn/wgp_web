@@ -44,12 +44,12 @@ const loadRoleDetails = async () => {
 
 // 返回角色列表
 const handleBack = () => {
-  router.push({ name: 'roles' })
+  router.push({ name: 'Roles' })
 }
 
 // 编辑角色
 const handleEdit = () => {
-  router.push({ name: 'roles' })
+  router.push({ name: 'Roles' })
 }
 
 // 组件挂载时加载数据

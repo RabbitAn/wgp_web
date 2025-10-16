@@ -2,7 +2,8 @@
 import { useRoute, useRouter } from 'vue-router'
 import { NBreadcrumb, NBreadcrumbItem, NIcon } from 'naive-ui'
 import { h, computed } from 'vue'
-import { HomeOutline } from '@vicons/ionicons5'
+import { HomeOutline,AlertCircleOutline } from '@vicons/ionicons5'
+import{ UserOutlined,UsergroupAddOutlined} from "@vicons/antd"
 
 interface BreadcrumbItem {
   title: string
@@ -24,6 +25,11 @@ const routeTitleMap = new Map([
 // 计算面包屑
 const breadcrumbs = computed(() => {
   const pathArray = route.path.split('/').filter(item => item)
+
+  //从路由中获取title和图标
+  const routeRes = router.getRoutes().find(route => route.path === '/' + pathArray[0])
+  
+
   const breadcrumbs: BreadcrumbItem[] = [
     {
       title: '首页',
@@ -53,29 +59,33 @@ const breadcrumbs = computed(() => {
     }
     
     breadcrumbs.push({
-      title,
-      path
+      title: routeRes?.meta.title as string || title,
+      path,
+      icon: routeRes?.meta.icon
     })
   })
   
   return breadcrumbs
 })
 
-// 渲染图标
-function renderIcon(icon: any) {
-  if (!icon) return null
-  return () => h(NIcon, null, { default: () => h(icon) })
+const iconComponents: Record<string, any> = {
+  home: HomeOutline,
+  user: UsergroupAddOutlined,
+  role:UserOutlined,
+  about: AlertCircleOutline
 }
+
+
 </script>
 
 <template>
-  <n-breadcrumb>
+  <n-breadcrumb>  
     <n-breadcrumb-item 
       v-for="(item, index) in breadcrumbs" 
       :key="item.path"
     >
       <router-link :to="item.path" class="breadcrumb-link">
-        <n-icon v-if="item.icon" :component="item.icon" class="breadcrumb-icon" />
+        <n-icon v-if="item.icon" :component="iconComponents[item.icon] || null" class="breadcrumb-icon" />
         {{ item.title }}
       </router-link>
     </n-breadcrumb-item>

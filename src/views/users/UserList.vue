@@ -26,7 +26,9 @@ interface User {
   email: string
   role: string
   status: 'active' | 'inactive'
-  is_active: boolean
+  is_active: boolean,
+  created_at: string,
+  updated_at: string
 }
 
 // 用户数据
@@ -123,12 +125,21 @@ const loadUsers = async () => {
           email: user.email,
           role: user.role,
           status: user.is_active ? 'active' : 'inactive',
-          is_active: user.is_active
+          is_active: user.is_active,
+          created_at: user.created_at || '',
+          updated_at: user.updated_at || ''
         })
       })
     }
     
-    users.value = userListData
+    users.value = userListData.map(user => {
+      return {
+        ...user,
+       //时间转换
+       created_at: user.created_at ? new Date(user.created_at).toLocaleString() : '',
+       updated_at: user.updated_at ? new Date(user.updated_at).toLocaleString() : ''
+      }
+    })
     pagination.itemCount = response.data.total
   } catch (error) {
     console.error('获取用户列表失败:', error)
@@ -167,7 +178,7 @@ const handleDeleteUser = async (id: number) => {
 // 编辑用户
 const handleEditUser = (id: number) => {
   router.push({
-    name: 'userDetail',
+    name: 'UserDetail', // 修正路由名称
     params: { id }
   })
 }
@@ -270,14 +281,18 @@ onMounted(() => {
 // 表格列定义
 const columns = [
   {
-    title: 'ID',
-    key: 'id',
-    width: 500
+    title: '序号',
+    key: 'index',
+    render(row: User, index: number) {
+      // 计算序号：(当前页码 - 1) * 每页条数 + 当前行索引 + 1
+      return (pagination.page - 1) * pagination.pageSize + index + 1
+    }
   },
   {
     title: '姓名',
     key: 'username'
   },
+
   {
     title: '邮箱',
     key: 'email'
@@ -286,6 +301,7 @@ const columns = [
     title: '角色',
     key: 'role'
   },
+  
   {
     title: '状态',
     key: 'status',
@@ -300,6 +316,15 @@ const columns = [
         }
       )
     }
+  },
+  {
+    title: '创建时间',
+    key: 'created_at'
+  },
+  {
+    title: '更新时间',
+    key: 'updated_at'
+
   },
   {
     title: '操作',

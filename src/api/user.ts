@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import type { UserInfo } from '@/stores/user'
 
 // 用户登录
 export interface LoginRequest {
@@ -22,6 +21,18 @@ export async function login(data: LoginRequest) {
  
 }
 
+export interface UserInfo { 
+  id: string,
+  username: string,
+  email: string,
+  phone: string,
+  role: string,
+  is_active: boolean,
+  created_at: string,
+  updated_at: string
+}
+
+
 // 获取用户列表
 export interface UserListResponse {
   users: UserInfo[]
@@ -42,13 +53,13 @@ export interface UserQueryParams {
 
 export function getUserList(params?: UserQueryParams) {
   // 根据API文档，用户列表接口是 /userusers
-  return request.get<UserListResponse>('/userusers', { params })
+  return request.get<UserListResponse>('/user/users', { params })
 }
 
 // 获取用户详情
 export function getUserDetail(id: number | string) {
   // 根据API文档，用户详情接口是 /userusers/{user_id}
-  return request.get<UserInfo>(`/userusers/${id}`)
+  return request.get<UserInfo>(`/user/users/${id}`)
 }
 
 // 创建用户
@@ -63,17 +74,17 @@ export interface CreateUserRequest {
 
 export async function createUser(data: CreateUserRequest) {
   // 根据API文档，创建用户接口是 /userusers
-  return await request.post<UserInfo>('/userusers', data)
+  return await request.post<UserInfo>('/user/users', data)
 }
 
 // 更新用户
 export function updateUser(id: number | string, data: Partial<CreateUserRequest>) {
   // 根据API文档，更新用户接口是 /userusers/{user_id}
-  return request.put<UserInfo>(`/userusers/${id}`, data)
+  return request.put<UserInfo>(`/user/users/${id}`, data)
 }
 
 // 删除用户
 export function deleteUser(id: number | string) {
   // 根据API文档，删除用户接口是 /userusers/{user_id}
-  return request.delete(`/userusers/${id}`)
+  return request.delete(`/user/users/${id}`)
 }

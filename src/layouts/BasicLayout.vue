@@ -43,10 +43,16 @@ const iconComponents: Record<string, any> = {
 const menuOptions = computed<MenuOption[]>(() => {
   // 查找根路由（path 为 '/' 的路由）
   const homeRoute = router.options.routes.find(r => r.path === '/')
+
   if (!homeRoute || !homeRoute.children) return []
   
   return homeRoute.children
-    .filter(child => child.name && !child.meta?.hidden) // 过滤掉没有名称或标记为隐藏的路由
+    .filter(child => 
+      child.name && 
+      !child.meta?.hidden && 
+      // 过滤掉包含动态参数的路由
+      !child.path?.includes(':')
+    ) // 过滤掉没有名称或标记为隐藏的路由
     .map(child => {
       // 从路由meta中获取图标名称
       const iconKey = child.meta?.icon as string || null
@@ -104,7 +110,7 @@ const handleDropdownSelect = (key: string | number) => {
       // 清除用户信息
       userStore.clearUserInfo()
       // 跳转到登录页
-      router.push({ name: 'login' })
+      router.push({ name: 'Login' }) // 修正路由名称为'Login'
       break
     case 'profile':
       // 跳转到个人中心（此处可替换为实际路由）

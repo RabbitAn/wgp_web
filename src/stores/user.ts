@@ -17,17 +17,41 @@ export const useUserStore = defineStore('user', () => {
   // 是否已登录
   const isLoggedIn = computed(() => !!userInfo.value)
 
+  const tokenRef=import.meta.env.VITE_TOKEN_REFRESH_TIME || 60
+
+  // 解析 JWT token 获取过期时间
+  const getTokenExpiration = (token: string): number | null => {
+    try {
+      const base64Url = token.split('.')[1]
+      if (!base64Url) {
+        return null
+      }
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      }).join(''))
+      const payload = JSON.parse(jsonPayload)      
+      return payload.exp ? payload.exp * 1000 : null // JWT 的 exp 是秒，转换为毫秒
+    } catch (e) {
+      console.error('解析 token 失败:', e)
+      return null
+    }
+  }
+
   //token是否过期
   const isTokenExpired = computed(() => {
     const token = localStorage.getItem('access_token')
     if (!token) {
       return true
     }
-    // 假设 token 过期时间为 1 小时
-    const expirationTime = 60 * 60 * 1000 * 12
+    
+    const expirationTime = getTokenExpiration(token)
+    if (!expirationTime) {
+      return true
+    }
+    
     const now = new Date().getTime()
-    const tokenTimestamp = new Date(token).getTime()
-    return now - tokenTimestamp > expirationTime //如果当前时间减去token的创建时间大于过期时间，则返回true
+    return now > expirationTime // 如果当前时间大于过期时间，则返回true
   })
   
   // 检查token是否过期并跳转

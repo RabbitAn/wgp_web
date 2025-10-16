@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { NCard, NDescriptions, NDescriptionsItem, NSpace, NButton, NAvatar, NMessageProvider, useMessage } from 'naive-ui'
-import { getUserDetail } from '@/api/user'
-import type { UserInfo } from '@/stores/user'
+import { getUserDetail, type UserInfo } from '@/api/user'
+
 
 // 获取路由参数
 const route = useRoute()
@@ -12,10 +12,14 @@ const message = useMessage()
 
 // 用户详情数据
 const userDetails = ref<UserInfo>({
-  id: 0,
-  name: '',
+  id: '',
+  username: '',
   email: '',
-  role: ''
+  phone: '',
+  role: '',
+  is_active: false,
+  created_at: '',
+  updated_at: ''
 })
 
 // 加载状态
@@ -43,7 +47,7 @@ const loadUserDetails = async () => {
 
 // 返回用户列表
 const handleBack = () => {
-  router.push({ name: 'users' })
+  router.push({ name: 'Users' })
 }
 
 // 组件挂载时加载数据
@@ -58,23 +62,16 @@ onMounted(() => {
       <n-space vertical>
         <div class="flex items-center gap-4">
           <n-avatar :size="64" round :src="undefined">
-            {{ userDetails.name.charAt(0).toUpperCase() }}
+            {{ userDetails.username.charAt(0).toUpperCase() }}
           </n-avatar>
           <div>
-            <h3 class="text-xl font-bold">{{ userDetails.name }}</h3>
-            <p class="text-gray-500">{{ userDetails.email }}</p>
+            <h3 class="text-xl font-bold">{{ userDetails.username }}</h3>
           </div>
         </div>
         
         <n-descriptions label-placement="left" bordered :column="1">
-          <n-descriptions-item label="用户ID">
-            {{ userDetails.id }}
-          </n-descriptions-item>
           <n-descriptions-item label="角色">
             {{ userDetails.role }}
-          </n-descriptions-item>
-          <n-descriptions-item label="邮箱">
-            {{ userDetails.email }}
           </n-descriptions-item>
         </n-descriptions>
         
